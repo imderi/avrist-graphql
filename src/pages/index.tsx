@@ -1,5 +1,5 @@
-import { GraphQLClient, gql } from 'graphql-request'
-import { BlogCard } from '../components/BlogCard';
+import { GraphQLClient, gql } from "graphql-request";
+import { BlogCard } from "../components/BlogCard";
 
 const graphcms = new GraphQLClient(
   "https://api-ap-southeast-2.hygraph.com/v2/clgvty2by0vnt01uifnngdtbv/master"
@@ -7,26 +7,26 @@ const graphcms = new GraphQLClient(
 
 const QUERY = gql`
   {
-    posts{
-      id,
-      title,
-      datePublished,
-      slug,
-      content{
+    posts {
+      id
+      title
+      datePublished
+      slug
+      content {
         html
       }
-      author{
-        name,
-        avatar{
+      author {
+        name
+        avatar {
           url
         }
       }
-      coverPhoto{
+      coverPhoto {
         url
       }
     }
   }
-`
+`;
 
 export async function getStaticProps() {
   const { posts } = await graphcms.request(QUERY);
@@ -35,16 +35,12 @@ export async function getStaticProps() {
       posts,
     },
     revalidate: 10,
-  }
-
+  };
 }
-
 
 export default function Home({ posts }) {
   return (
-    <main
-      className={``}
-    >
+    <main className={``}>
       <p>GraphQL</p>
       {posts.map((post) => (
         <BlogCard
@@ -57,5 +53,5 @@ export default function Home({ posts }) {
         />
       ))}
     </main>
-  )
+  );
 }
